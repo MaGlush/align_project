@@ -1,10 +1,11 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++11 -fPIC
 
-LIB_DIR = .
+BIN_DIR = ../../bin
+LIB_DIR = $(BIN_DIR)/plugins
 SRC_DIR = src
 INCLUDE = -I ../include -I ../externals/EasyBMP/include/
-OBJ_DIR = obj
+OBJ_DIR = $(BIN_DIR)/plugins/obj
 
 .DEFAULT_GOAL := all
 
@@ -28,8 +29,6 @@ $(LIB_DIR)/*.so:
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJ_DIR)
-	rm -f lib_gray_world.so lib_autocontrast.so lib_median.so lib_unsharp.so lib_resize.so
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(BIN_DIR) $(OBJ_DIR) $(LIB_DIR)
 	
 

@@ -36,6 +36,7 @@ using std::endl;
 using std::to_string;
 using std::numeric_limits;
 
+#define PLUG_PATH "../bin/plugins/"
 struct Args;
 
 class Plugin

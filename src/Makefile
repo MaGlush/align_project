@@ -13,9 +13,9 @@ CXXFLAGS += -Werror -Wformat-security -Wignored-qualifiers -Winit-self \
 SRC_DIR = src
 INCLUDE_DIR = include
 
-BUILD_DIR = build
+BUILD_DIR = ../bin
 OBJ_DIR = $(BUILD_DIR)/obj
-BIN_DIR = $(BUILD_DIR)/bin
+BIN_DIR = $(BUILD_DIR)/
 DEP_DIR = $(BUILD_DIR)/deps
 
 PLUGIN_MAKE = plugins/Makefile
@@ -56,7 +56,7 @@ CXXFILES := $(wildcard $(SRC_DIR)/*.cpp)
 
 # Alias to make all targets.
 .PHONY: all
-all: $(BIN_DIR)/matrix_example $(BIN_DIR)/align
+all:  $(BIN_DIR)/align #$(BIN_DIR)/matrix_example
 
 # Suppress makefile rebuilding.
 Makefile: ;
@@ -72,14 +72,14 @@ endif
 bridge.touch: $(wildcard $(BRIDGE_INCLUDE_DIR)/*) \
 		$(wildcard $(BRIDGE_LIBRARY_DIR)/*)
 	mkdir -p $(BRIDGE_INCLUDE_DIR) $(BRIDGE_LIBRARY_DIR)
+	mkdir -p $(BIN_DIR) $(OBJ_DIR) $(DEP_DIR)
 	make -C $(dir $(BRIDGE_MAKE)) -f $(notdir $(BRIDGE_MAKE)) $(BRIDGE_TARGETS)
 	make -C $(dir $(PLUGIN_MAKE)) -f $(notdir $(PLUGIN_MAKE)) all
-	mkdir -p $(OBJ_DIR) $(BIN_DIR) $(DEP_DIR)
 	echo "include deps.mk" > $@
 
 # Rules for compiling targets
-$(BIN_DIR)/matrix_example: $(OBJ_DIR)/matrix_example.o $(OBJ_DIR)/io.o bridge.touch
-	$(CXX) $(CXXFLAGS) $(filter %.o, $^) -o $@ $(LDFLAGS)
+# $(BIN_DIR)/matrix_example: $(OBJ_DIR)/matrix_example.o $(OBJ_DIR)/io.o bridge.touch
+# 	$(CXX) $(CXXFLAGS) $(filter %.o, $^) -o $@ $(LDFLAGS)
 
 $(BIN_DIR)/align: $(OBJ_DIR)/main.o $(OBJ_DIR)/io.o $(OBJ_DIR)/align.o  bridge.touch
 	$(CXX) $(CXXFLAGS) $(filter %.o, $^) -o $@ $(LDFLAGS)
@@ -100,9 +100,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 # Delete all temprorary and binary files
 clean:
 	make -C $(dir $(BRIDGE_MAKE)) -f $(notdir $(BRIDGE_MAKE)) clean
-	make -C $(dir $(PLUGIN_MAKE)) -f $(notdir $(PLUGIN_MAKE)) clean	
 	rm -rf $(BUILD_DIR) $(BRIDGE_INCLUDE_DIR) $(BRIDGE_LIBRARY_DIR)
 	rm -f bridge.touch
+	make -C $(dir $(PLUGIN_MAKE)) -f $(notdir $(PLUGIN_MAKE)) clean	
 
 
 # If you still have "WTF?!" feeling, try reading teaching book

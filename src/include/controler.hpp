@@ -152,13 +152,13 @@ void Control::filter_args(int argc, char** argv, string action)
 
 int Control::search_plugins()
 {
-    cview->print_msg ("searching plugins...");
+    cview->print_msg ("searching plugins in " PLUG_PATH);
     
     DIR *dp;
     struct dirent *dirp;
 
-    if((dp  = opendir("./plugins")) == NULL) {
-    	cview->print_msg ("Error: can't open ./plugins");
+    if((dp  = opendir(PLUG_PATH)) == NULL) {
+    	cview->print_msg ("Error: can't open " PLUG_PATH);
         return -1;
     }
     int found = 0;
@@ -173,7 +173,7 @@ int Control::search_plugins()
     }
     cview->print_msg( to_string(found) + " libraries founded\n" );    
     if(closedir(dp) < 0){
-        cview->print_msg ("Error: can't close opened dir ./plugins");
+        cview->print_msg ("Error: can't close opened dir " PLUG_PATH);
         return -1;
     }
     return found;
@@ -186,7 +186,7 @@ int Control::load_plugins(const int founded)
     int loaded = 0;
     for (int i=0; i<founded; ++i){
         string name = pl_name[i];        
-        string pathname = "./plugins/" + name;
+        string pathname = PLUG_PATH + name;
         handle = dlopen(pathname.c_str(), RTLD_LAZY);
         if (handle){
             pl_ptr[loaded] = handle;
