@@ -1,4 +1,4 @@
-#include "io.h"
+#include "mvc.h"
 
 #include <string>
 using std::string;
@@ -7,7 +7,17 @@ using std::tuple;
 using std::make_tuple;
 using std::tie;
 
-Image load_image(const char *path)
+void Model::set_state(const string& s)
+{
+    state = s;
+}
+
+string Model::get_state()
+{
+    return state;
+}
+
+Image Model::load_image(const char *path)
 {
     BMP in;
 
@@ -26,7 +36,7 @@ Image load_image(const char *path)
     return res;
 }
 
-void save_image(const Image &im, const char *path)
+void Model::save_image(const Image &im, const char *path)
 {
     BMP out;
     out.SetSize(im.n_cols, im.n_rows);
