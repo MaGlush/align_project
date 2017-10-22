@@ -18,18 +18,28 @@ using std::numeric_limits;
 
 CView::CView(Model* mod): model(mod),  logf("log.txt", std::ios::app)
 {
-	mod->add_view(this);
+    mod->add_view(this);
+    std::time_t t = std::time(nullptr);
+    char date[10];
+    std::strftime(date, sizeof(date), "%m/%d/%y", std::localtime(&t));
+    cout << "----------------- new session starts -----------------" << endl;
+    cout << "---------------------- " << date << " ----------------------" << endl;
+    logf << "----------------- new session starts -----------------" << endl;
+    logf << "---------------------- " << date << " ----------------------" << endl;
 }
 void CView::update()
 {
     string msg = model->message;
+    std::time_t t = std::time(nullptr);
+    char timer[10];
+    std::strftime(timer, sizeof(timer), "%H:%M:%S", std::localtime(&t));
     if(!msg.empty()){
-        cout << "State: " << model->message << endl;
-        logf << "State: " << model->message << endl;
+        cout << timer << " | State: " << model->message << endl;
+        logf << timer << " | State: " << model->message << endl;
         model->message.clear();
     }else{
-        cout << "State: " << model->get_state() << endl;
-        logf << "State: " << model->get_state() << endl; 
+        cout << timer << " | State: " << model->get_state() << endl;
+        logf << timer << " | State: " << model->get_state() << endl; 
     }       
 }
 

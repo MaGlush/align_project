@@ -104,5 +104,6 @@ clean:
 	rm -rf $(BUILD_DIR) $(BRIDGE_INCLUDE_DIR) $(BRIDGE_LIBRARY_DIR)
 	rm -f bridge.touch
 
+
 # If you still have "WTF?!" feeling, try reading teaching book
 # by Mashechkin & Co. http://unicorn.ejudge.ru/instr.pdf

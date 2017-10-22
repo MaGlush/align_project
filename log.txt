@@ -1,25 +1,35 @@
-State: 
-State: Image loaded
-State: Plugins loading
-State: resize starts
-State: Image saved
-State: 
-State: Image loaded
-State: Alignment starts
-State: Image saved
-State: 
-State: Image loaded
-State: Alignment starts
-State: Image saved
-State: 
-Error: Error reading file ./align.bmp
-For help type: 
-/home/sole/Asu/Prac/align_project/build/bin/align --help
-State: 
-State: Image loaded
-State: Alignment starts
-State: Image saved
-State: Program starts
-State: Image loaded
-State: Alignment starts
-State: Image saved
+23:41:13 | State: ==new session starts==
+23:41:13 | State: Program starts
+23:41:13 | State: Image loaded
+23:41:13 | State: Alignment starts
+23:41:14 | State: Image saved
+23:47:34 | State: Program starts
+23:47:34 | State: Image loaded
+23:47:34 | State: Alignment starts
+23:47:35 | State: Image saved
+23:48:38 | State: Program starts
+23:48:38 | State: Image loaded
+23:48:38 | State: Alignment starts
+23:48:39 | State: Image saved
+23:49:25 | State: Program starts
+23:49:25 | State: Image loaded
+23:49:25 | State: Alignment starts
+23:49:26 | State: Image saved
+23:50:01 | State: Program starts
+23:50:01 | State: Image loaded
+23:50:01 | State: Alignment starts
+23:50:02 | State: Image saved
+23:50:20 | State: Program starts
+23:50:20 | State: Image loaded
+23:50:20 | State: Alignment starts
+23:50:21 | State: Image saved
+23:50:42 | State: Program starts
+23:50:42 | State: Image loaded
+23:50:42 | State: Alignment starts
+23:50:43 | State: Image saved
+----------------- new session starts -----------------
+---------------------- 10/22/17 ----------------------
+23:52:47 | State: Program starts
+23:52:47 | State: Image loaded
+23:52:47 | State: Alignment starts
+23:52:48 | State: Image saved
