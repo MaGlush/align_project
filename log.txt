@@ -1,0 +1,25 @@
+State: 
+State: Image loaded
+State: Plugins loading
+State: resize starts
+State: Image saved
+State: 
+State: Image loaded
+State: Alignment starts
+State: Image saved
+State: 
+State: Image loaded
+State: Alignment starts
+State: Image saved
+State: 
+Error: Error reading file ./align.bmp
+For help type: 
+/home/sole/Asu/Prac/align_project/build/bin/align --help
+State: 
+State: Image loaded
+State: Alignment starts
+State: Image saved
+State: Program starts
+State: Image loaded
+State: Alignment starts
+State: Image saved

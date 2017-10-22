@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -O2 -g -Wall -std=c++0x
+CXXFLAGS = -O2 -g -Wall -std=c++0x -fPIC
 
 # Strict compiler options
 CXXFLAGS += -Werror -Wformat-security -Wignored-qualifiers -Winit-self \
@@ -18,6 +18,8 @@ OBJ_DIR = $(BUILD_DIR)/obj
 BIN_DIR = $(BUILD_DIR)/bin
 DEP_DIR = $(BUILD_DIR)/deps
 
+PLUGIN_MAKE = plugins/Makefile
+
 # Bridge - place for main project to pull headers and compiled libraries.
 # Headers must be placed into BRIDGE_LIBRARY_DIR before dependency generation
 # proceed. Libraries in BRIDGE_LIBRARY_DIR will be required on linkage step.
@@ -29,7 +31,7 @@ BRIDGE_LIBRARY_DIR = bridge/lib
 BRIDGE_TARGETS = easybmp
 
 # Link libraries gcc flag: library will be searched with prefix "lib".
-LDFLAGS = -leasybmp
+LDFLAGS = -leasybmp -ldl
 
 # Add headers dirs to gcc search path
 CXXFLAGS += -I $(INCLUDE_DIR) -I $(BRIDGE_INCLUDE_DIR)
@@ -41,6 +43,7 @@ CXXFLAGS += -L $(BRIDGE_LIBRARY_DIR)
 make_path = $(addsuffix $(1), $(basename $(subst $(2), $(3), $(4))))
 # Takes path list with source files and returns pathes to related objects.
 src_to_obj = $(call make_path,.o, $(SRC_DIR), $(OBJ_DIR), $(1))
+src_to_obj_plugin = $(call make_path,.o, $(PLUGIN_SRC_DIR), $(PLUGIN_OBJ_DIR), $(1))
 # Takes path list with object files and returns pathes to related dep. file.
 # Dependency files will be generated with gcc -MM.
 src_to_dep = $(call make_path,.d, $(SRC_DIR), $(DEP_DIR), $(1))
@@ -70,6 +73,7 @@ bridge.touch: $(wildcard $(BRIDGE_INCLUDE_DIR)/*) \
 		$(wildcard $(BRIDGE_LIBRARY_DIR)/*)
 	mkdir -p $(BRIDGE_INCLUDE_DIR) $(BRIDGE_LIBRARY_DIR)
 	make -C $(dir $(BRIDGE_MAKE)) -f $(notdir $(BRIDGE_MAKE)) $(BRIDGE_TARGETS)
+	make -C $(dir $(PLUGIN_MAKE)) -f $(notdir $(PLUGIN_MAKE)) all
 	mkdir -p $(OBJ_DIR) $(BIN_DIR) $(DEP_DIR)
 	echo "include deps.mk" > $@
 
@@ -77,7 +81,7 @@ bridge.touch: $(wildcard $(BRIDGE_INCLUDE_DIR)/*) \
 $(BIN_DIR)/matrix_example: $(OBJ_DIR)/matrix_example.o $(OBJ_DIR)/io.o bridge.touch
 	$(CXX) $(CXXFLAGS) $(filter %.o, $^) -o $@ $(LDFLAGS)
 
-$(BIN_DIR)/align: $(OBJ_DIR)/main.o $(OBJ_DIR)/io.o $(OBJ_DIR)/align.o bridge.touch
+$(BIN_DIR)/align: $(OBJ_DIR)/main.o $(OBJ_DIR)/io.o $(OBJ_DIR)/align.o  bridge.touch
 	$(CXX) $(CXXFLAGS) $(filter %.o, $^) -o $@ $(LDFLAGS)
 
 # Pattern for generating dependency description files (*.d)
@@ -87,12 +91,16 @@ $(DEP_DIR)/%.d: $(SRC_DIR)/%.cpp
 # Pattern for compiling object files (*.o)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $(call src_to_obj, $<) $<
+# Pattern plugins src -> obj
+#$(PLUGIN_OBJ_DIR)/%.o: $(PLUGIN_SRC_DIR)/%.cpp
+#	$(CXX) $(CXXFLAGS) -c -o $(PLUGIN_OBJ_DIR)/%.o
 
 # Fictive target
 .PHONY: clean
 # Delete all temprorary and binary files
 clean:
 	make -C $(dir $(BRIDGE_MAKE)) -f $(notdir $(BRIDGE_MAKE)) clean
+	make -C $(dir $(PLUGIN_MAKE)) -f $(notdir $(PLUGIN_MAKE)) clean	
 	rm -rf $(BUILD_DIR) $(BRIDGE_INCLUDE_DIR) $(BRIDGE_LIBRARY_DIR)
 	rm -f bridge.touch
 

@@ -29,7 +29,7 @@ void CView::update()
         model->message.clear();
     }else{
         cout << "State: " << model->get_state() << endl;
-        logf << "State: " << model->message << endl; 
+        logf << "State: " << model->get_state() << endl; 
     }       
 }
 
