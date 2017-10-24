@@ -10,7 +10,7 @@
 
 ## запуск из bin/ 
     
-    ./align input.bmp output.bmp [--processing flags]
+    ./align input.bmp output.bmp [--filter]
 
 ## Реализованно:
     
