@@ -1,0 +1,13 @@
+----------------- new session starts -----------------
+---------------------- 10/24/17 ----------------------
+17:08:59 | State: Program starts
+Error: Error reading file 1.bmp
+For help type: 
+./align --help
+----------------- new session starts -----------------
+---------------------- 10/24/17 ----------------------
+17:09:06 | State: Program starts
+17:09:06 | State: Image loaded
+17:09:06 | State: Plugins loading
+17:09:41 | State: Alignment starts
+17:09:42 | State: Image saved
