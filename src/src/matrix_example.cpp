@@ -1,7 +1,7 @@
 #include <iostream>
-#include "matrix.h"
-#include "io.h"
-
+#include "matrix.h"     
+#include "io.h"         
+                        
 using std::cout;
 using std::endl;
 
@@ -48,4 +48,5 @@ int main(int argc, char **argv)
     img3 = img;
     Image img2 = img3.unary_map(BoxFilterOp());
     save_image(img2, argv[2]);
+    return 0;
 }
